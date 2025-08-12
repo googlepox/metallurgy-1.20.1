@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shapeless",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/block"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "blockDesichalkos"
+    }
+  ],
+  "result": {
+    "item": "metallurgy:desichalkos_ingot",
+    "count": 9
+  }
+}

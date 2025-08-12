@@ -1,0 +1,30 @@
+{
+  "type": "forge:ore_shaped",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/hazard_block"
+    }
+  ],
+  "pattern": [
+    "ICI",
+    "CDC",
+    "ICI"
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotMithril"
+    },
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "D": {
+      "item": "metallurgy:bimetal_structure_block"
+    }
+  },
+  "result": {
+    "item": "metallurgy:mithril_hazard_block",
+    "count": 32
+  }
+}

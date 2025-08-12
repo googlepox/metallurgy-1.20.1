@@ -1,0 +1,28 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " AL",
+    "ACA",
+    "RA "
+  ],
+  "key": {
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "blockCopper"
+    },
+    "A": {
+      "type": "forge:ore_dict",
+      "ore": "ingotCarmot"
+    },
+    "R": {
+      "type": "forge:ore_dict",
+      "ore": "blockRedstone"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "metallurgy:ore_detector"
+  }
+}

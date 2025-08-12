@@ -1,0 +1,26 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "L L",
+    "III"
+  ],
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/block"
+    }
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotRubracium"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "metallurgy:rubracium_gauntlet",
+    "count": 2
+  }
+}

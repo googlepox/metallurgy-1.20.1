@@ -1,0 +1,31 @@
+{
+  "type": "forge:ore_shaped",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/crystals"
+    }
+  ],
+  "pattern": [
+    " N ",
+    "NIN",
+    "IDI"
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotAlduorite"
+    },
+    "N": {
+      "type": "forge:ore_dict",
+      "ore": "nuggetAlduorite"
+    },
+    "D": {
+      "item": "metallurgy:bimetal_structure_block"
+    }
+  },
+  "result": {
+    "item": "metallurgy:alduorite_crystals",
+    "count": 32
+  }
+}

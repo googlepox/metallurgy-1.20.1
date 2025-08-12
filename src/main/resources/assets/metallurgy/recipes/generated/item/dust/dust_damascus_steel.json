@@ -1,0 +1,27 @@
+{
+  "type": "forge:ore_shapeless",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "item/dust"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "dustBronze"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "dustBronze"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "dustIron"
+    }
+  ],
+  "result": {
+    "item": "metallurgy:damascus_steel_dust",
+    "count": 3
+  }
+}

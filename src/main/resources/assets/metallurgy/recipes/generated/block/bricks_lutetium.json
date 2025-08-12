@@ -1,0 +1,27 @@
+{
+  "type": "forge:ore_shaped",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/bricks"
+    }
+  ],
+  "pattern": [
+    "III",
+    "IDI",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotLutetium"
+    },
+    "D": {
+      "item": "metallurgy:bimetal_structure_block"
+    }
+  },
+  "result": {
+    "item": "metallurgy:lutetium_bricks",
+    "count": 48
+  }
+}

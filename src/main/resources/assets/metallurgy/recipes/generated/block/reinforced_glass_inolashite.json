@@ -1,0 +1,30 @@
+{
+  "type": "forge:ore_shaped",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/reinforced_glass"
+    }
+  ],
+  "pattern": [
+    "IGI",
+    "GDG",
+    "IGI"
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotInolashite"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "D": {
+      "item": "metallurgy:bimetal_structure_block"
+    }
+  },
+  "result": {
+    "item": "metallurgy:inolashite_reinforced_glass",
+    "count": 32
+  }
+}

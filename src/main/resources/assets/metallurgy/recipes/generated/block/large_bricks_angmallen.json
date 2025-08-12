@@ -1,0 +1,31 @@
+{
+  "type": "forge:ore_shaped",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/large_bricks"
+    }
+  ],
+  "pattern": [
+    "IBI",
+    "BDB",
+    "IBI"
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotAngmallen"
+    },
+    "D": {
+      "item": "metallurgy:bimetal_structure_block"
+    },
+    "B": {
+      "item": "minecraft:stonebrick",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "metallurgy:angmallen_large_bricks",
+    "count": 32
+  }
+}

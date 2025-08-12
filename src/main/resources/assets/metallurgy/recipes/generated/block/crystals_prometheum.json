@@ -1,0 +1,31 @@
+{
+  "type": "forge:ore_shaped",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/crystals"
+    }
+  ],
+  "pattern": [
+    " N ",
+    "NIN",
+    "IDI"
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotPrometheum"
+    },
+    "N": {
+      "type": "forge:ore_dict",
+      "ore": "nuggetPrometheum"
+    },
+    "D": {
+      "item": "metallurgy:bimetal_structure_block"
+    }
+  },
+  "result": {
+    "item": "metallurgy:prometheum_crystals",
+    "count": 32
+  }
+}

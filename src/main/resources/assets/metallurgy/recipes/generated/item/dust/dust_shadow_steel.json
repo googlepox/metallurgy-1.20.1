@@ -1,0 +1,27 @@
+{
+  "type": "forge:ore_shapeless",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "item/dust"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "dustLemurite"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "dustShadowIron"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "dustShadowIron"
+    }
+  ],
+  "result": {
+    "item": "metallurgy:shadow_steel_dust",
+    "count": 3
+  }
+}

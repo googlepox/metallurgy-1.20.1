@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shapeless",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/block"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "blockAtlarus"
+    }
+  ],
+  "result": {
+    "item": "metallurgy:atlarus_ingot",
+    "count": 9
+  }
+}

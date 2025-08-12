@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/block"
+    }
+  ],
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "type": "forge:ore_dict",
+      "ore": "ingotBlackSteel"
+    }
+  },
+  "result": {
+    "item": "metallurgy:black_steel_block"
+  }
+}

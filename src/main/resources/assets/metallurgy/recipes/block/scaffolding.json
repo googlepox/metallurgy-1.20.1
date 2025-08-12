@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "TZT",
+    "Z Z",
+    "TZT"
+  ],
+  "key": {
+    "T": {
+      "type": "forge:ore_dict",
+      "ore": "ingotTin"
+    },
+    "Z": {
+      "type": "forge:ore_dict",
+      "ore": "ingotZinc"
+    }
+  },
+  "result": {
+    "item": "metallurgy:bimetal_structure_block"
+  }
+}

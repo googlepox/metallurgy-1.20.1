@@ -1,0 +1,11 @@
+{
+  "values": [
+    "metallurgy:bitumen_block",
+    "metallurgy:adamantine_block",
+    "metallurgy:adamantine_bricks",
+    "metallurgy:adamantine_ore",
+    "metallurgy:deepslate_adamantine_ore",
+    "metallurgy:nether_adamantine_ore",
+    "metallurgy:end_stone_adamantine_ore"
+  ]
+}

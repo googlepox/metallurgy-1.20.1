@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "metallurgy:adamantine_ingot"
+    }
+  },
+  "result":{
+    "item": "metallurgy:adamantine_bricks"
+  }
+}

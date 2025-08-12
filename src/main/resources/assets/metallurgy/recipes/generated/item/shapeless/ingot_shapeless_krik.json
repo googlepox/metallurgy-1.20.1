@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shapeless",
+  "conditions": [
+    {
+      "type": "metallurgy:registry_condition",
+      "depends_on": "block/block"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "blockKrik"
+    }
+  ],
+  "result": {
+    "item": "metallurgy:krik_ingot",
+    "count": 9
+  }
+}
