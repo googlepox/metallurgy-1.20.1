@@ -75,8 +75,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.POTASH_ORE_NETHER);
         blockWithItem(ModBlocks.POTASH_ORE_END_STONE);
 
-
-        simpleBlock(ModBlocks.CRUSHER.get(),
+        simpleBlockWithItem(ModBlocks.CRUSHER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/crusher")));
     }
 

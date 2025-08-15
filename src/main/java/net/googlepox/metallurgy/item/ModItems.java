@@ -24,7 +24,7 @@ public class ModItems {
     public static final RegistryObject<Item> IRON_DUST = ITEMS.register("iron_dust",
             () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> SULFUR = ITEMS.register("sulfur",
+    public static final RegistryObject<Item> SULFUR = ITEMS.register("dust_sulfur",
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> POTASH = ITEMS.register("potash",
@@ -33,7 +33,7 @@ public class ModItems {
     public static final RegistryObject<Item> PHOSPHORUS = ITEMS.register("phosphorus",
             () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> POTASH_DUST = ITEMS.register("potash_dust",
+    public static final RegistryObject<Item> POTASH_DUST = ITEMS.register("potash_fertilizer",
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> TAR = ITEMS.register("tar",

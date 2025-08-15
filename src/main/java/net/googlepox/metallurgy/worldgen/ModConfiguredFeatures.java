@@ -63,9 +63,9 @@ public class ModConfiguredFeatures {
 
         register(context, OVERWORLD_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(overworldOres, 7));
         register(context, NETHER_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(netherrackReplacables,
-                MetalRegistry.NETHER_ORE_BLOCKS.get(name).get().defaultBlockState(), 7));
+                ModBlocks.POTASH_ORE_NETHER.get().defaultBlockState(), 7));
         register(context, END_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(endReplaceables,
-                MetalRegistry.ENDSTONE_ORE_BLOCKS.get(name).get().defaultBlockState(), 7));
+                ModBlocks.POTASH_ORE_END_STONE.get().defaultBlockState(), 7));
 
         name = "phosphorite";
         overworldOres = List.of(OreConfiguration.target(stoneReplaceable,
@@ -78,9 +78,9 @@ public class ModConfiguredFeatures {
 
         register(context, OVERWORLD_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(overworldOres, 5));
         register(context, NETHER_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(netherrackReplacables,
-                MetalRegistry.NETHER_ORE_BLOCKS.get(name).get().defaultBlockState(), 5));
+                ModBlocks.PHOSPHORITE_ORE_NETHER.get().defaultBlockState(), 5));
         register(context, END_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(endReplaceables,
-                MetalRegistry.ENDSTONE_ORE_BLOCKS.get(name).get().defaultBlockState(), 5));
+                ModBlocks.PHOSPHORITE_ORE_END_STONE.get().defaultBlockState(), 5));
 
 
         name = "sulfur";
@@ -94,9 +94,9 @@ public class ModConfiguredFeatures {
 
         register(context, OVERWORLD_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(overworldOres, 6));
         register(context, NETHER_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(netherrackReplacables,
-                MetalRegistry.NETHER_ORE_BLOCKS.get(name).get().defaultBlockState(), 6));
+                ModBlocks.SULFUR_ORE_NETHER.get().defaultBlockState(), 6));
         register(context, END_ORE_KEYS.get(name), Feature.ORE, new OreConfiguration(endReplaceables,
-                MetalRegistry.ENDSTONE_ORE_BLOCKS.get(name).get().defaultBlockState(), 6));
+                ModBlocks.SULFUR_ORE_END_STONE.get().defaultBlockState(), 6));
 
     }
 

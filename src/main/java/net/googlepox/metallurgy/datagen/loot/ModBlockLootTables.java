@@ -73,15 +73,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlocks.POTASH_ORE_END_STONE.get(),
                 block -> createOreDrop(ModBlocks.POTASH_ORE_END_STONE.get(), ModItems.POTASH.get()));
 
-        this.add(ModBlocks.POTASH_ORE.get(),
-                block -> createOreDrop(ModBlocks.POTASH_ORE.get(), ModItems.POTASH.get()));
-        this.add(ModBlocks.POTASH_ORE_DEEPSLATE.get(),
-                block -> createOreDrop(ModBlocks.POTASH_ORE_DEEPSLATE.get(), ModItems.POTASH.get()));
-        this.add(ModBlocks.POTASH_ORE_NETHER.get(),
-                block -> createOreDrop(ModBlocks.POTASH_ORE_NETHER.get(), ModItems.POTASH.get()));
-        this.add(ModBlocks.POTASH_ORE_END_STONE.get(),
-                block -> createOreDrop(ModBlocks.POTASH_ORE_END_STONE.get(), ModItems.POTASH.get()));
-
         this.add(ModBlocks.TAR_ORE.get(),
                 block -> createOreDrop(ModBlocks.TAR_ORE.get(), ModItems.TAR.get()));
         this.add(ModBlocks.TAR_ORE_DEEPSLATE.get(),
@@ -107,6 +98,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         blocks.addAll(MetalRegistry.ENDSTONE_ORE_BLOCKS.values().stream().map(RegistryObject::get).toList());
         blocks.addAll(MetalRegistry.METAL_BLOCKS.values().stream().map(RegistryObject::get).toList());
         blocks.addAll(MetalRegistry.METAL_BRICKS.values().stream().map(RegistryObject::get).toList());
+        blocks.addAll(ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).toList());
         return blocks;
     }
 }

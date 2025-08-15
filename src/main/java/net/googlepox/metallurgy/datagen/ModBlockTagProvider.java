@@ -97,8 +97,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                         ModBlocks.POTASH_ORE.get(),
                         ModBlocks.POTASH_ORE_DEEPSLATE.get(),
                         ModBlocks.POTASH_ORE_NETHER.get(),
-                        ModBlocks.POTASH_ORE_END_STONE.get(),
-                        ModBlocks.CRUSHER.get());
+                        ModBlocks.POTASH_ORE_END_STONE.get());
         this.tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.BITUMEN_BLOCK.get(),
                         ModBlocks.PHOSPHORITE_ORE.get(),

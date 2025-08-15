@@ -2,6 +2,7 @@ package net.googlepox.metallurgy;
 
 import com.mojang.logging.LogUtils;
 import net.googlepox.metallurgy.block.ModBlocks;
+import net.googlepox.metallurgy.block.entity.ModBlockEntities;
 import net.googlepox.metallurgy.config.CommonConfig;
 import net.googlepox.metallurgy.core.MetalRegistry;
 import net.googlepox.metallurgy.datagen.ModItemTagProvider;
@@ -9,6 +10,8 @@ import net.googlepox.metallurgy.item.ModCreativeModeTabs;
 import net.googlepox.metallurgy.item.ModItems;
 import net.googlepox.metallurgy.material.MetalStats;
 import net.googlepox.metallurgy.material.ModMetals;
+import net.googlepox.metallurgy.recipe.ModRecipes;
+import net.googlepox.metallurgy.screen.ModMenuTypes;
 import net.googlepox.metallurgy.util.ModTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
@@ -59,6 +62,13 @@ public class Metallurgy {
 
         MetalRegistry.BLOCKS.register(modEventBus);
         MetalRegistry.ITEMS.register(modEventBus);
+
+        //ModBlockEntities.register(modEventBus);
+        //ModMenuTypes.register(modEventBus);
+
+        //ModRecipes.register(modEventBus);
+
+        modEventBus.addListener(this::commonSetup);
 
 
         modEventBus.addListener(this::commonSetup);
