@@ -11,6 +11,12 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 6,
     "color": "C62C29",
+    "ore_stats": {
+      "veinSize": 3,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": -34
+    },
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -36,7 +42,14 @@
     "hardness": 5.3,
     "blast_resistance": 10.0,
     "ore_harvest_level": 6,
-    "color": "9294BE"
+    "color": "9294BE",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 4,
+      "veinsPerChunk": 4,
+      "minY": 0,
+      "maxY": 70
+    }
   },
   {
     "name": "amordrine",
@@ -44,6 +57,7 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": -1,
     "color": "9E69AF",
+    
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -69,6 +83,7 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": -1,
     "color": "C9B080",
+    
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -94,6 +109,13 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": 3,
     "color": "1D52A3",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 6,
+      "veinsPerChunk": 4,
+      "minY": 40,
+      "maxY": 140
+    },
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -119,6 +141,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 6,
     "color": "F2CB59",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 5,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 48
+    },
     "armor_stats": {
       "damage_reduction": [
         4,
@@ -146,6 +175,7 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": -1,
     "color": "494949",
+    
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -174,6 +204,7 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": -1,
     "color": "CDAA3A",
+    
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -203,6 +234,7 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": -1,
     "color": "CB8B4B",
+    
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -228,6 +260,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 5,
     "color": "C39C69",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 4,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 52
+    },
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -255,6 +294,7 @@
     "blast_resistance": 20.0,
     "ore_harvest_level": -1,
     "color": "89EC87",
+    
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -280,6 +320,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 4,
     "color": "9ECFD5",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 5,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 127
+    },
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -301,37 +348,12 @@
     }
   },
   {
-    "name": "copper",
-    "hardness": 2.2,
-    "blast_resistance": 6.0,
-    "ore_harvest_level": 1,
-    "color": "E5770A",
-    "armor_stats": {
-      "damage_reduction": [
-        1,
-        2,
-        3,
-        2
-      ],
-      "enchantability": 25,
-      "durability": 5,
-      "toughness": 0.0
-    },
-    "tool_stats": {
-      "efficiency": 6.10,
-      "harvest_level": 2,
-      "enchantability": 25,
-      "durability": 120,
-      "damage": 1.2,
-      "attack_speed": 0.4
-    }
-  },
-  {
     "name": "damascus_steel",
     "hardness": 10.0,
     "blast_resistance": 20.0,
     "ore_harvest_level": -1,
     "color": "C4BCAA",
+    
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -357,6 +379,13 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": 1,
     "color": "436182",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 5,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 30
+    },
     "armor_stats": {
       "damage_reduction": [
         1,
@@ -382,6 +411,7 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": -1,
     "color": "8159DD",
+    
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -409,6 +439,7 @@
     "blast_resistance": 6.0,
     "ore_harvest_level": -1,
     "color": "EFEF57",
+    
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -435,6 +466,7 @@
     "blast_resistance": 6.0,
     "ore_harvest_level": -1,
     "color": "A6C69B",
+    
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -463,6 +495,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 4,
     "color": "58B396",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 7,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 128
+    },
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -489,6 +528,7 @@
     "blast_resistance": 20.0,
     "ore_harvest_level": -1,
     "color": "351F22",
+    
     "armor_stats": {
       "damage_reduction": [
         4,
@@ -514,6 +554,7 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": -1,
     "color": "D54B72",
+    
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -540,6 +581,13 @@
     "blast_resistance": 6.0,
     "ore_harvest_level": 3,
     "color": "FD9663",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 8,
+      "veinsPerChunk": 4,
+      "minY": 32,
+      "maxY": 96
+    },
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -565,7 +613,14 @@
     "hardness": 3.2,
     "blast_resistance": 10.0,
     "ore_harvest_level": 2,
-    "color": "6A3359"
+    "color": "6A3359",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 5,
+      "veinsPerChunk": 4,
+      "minY": 0,
+      "maxY": 72
+    }
   },
   {
     "name": "inolashite",
@@ -573,6 +628,7 @@
     "blast_resistance": 20.0,
     "ore_harvest_level": -1,
     "color": "92D2D2",
+    
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -599,6 +655,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 4,
     "color": "E381EA",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 5,
+      "veinsPerChunk": 4,
+      "minY": 0,
+      "maxY": 120
+    },
     "armor_stats": {
       "damage_reduction": [
         1,
@@ -625,6 +688,7 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": -1,
     "color": "A7D85E",
+    
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -650,7 +714,14 @@
     "hardness": 5.5,
     "blast_resistance": 6.0,
     "ore_harvest_level": 5,
-    "color": "D0D0D0"
+    "color": "D0D0D0",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 6,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 50
+    }
   },
   {
     "name": "lutetium",
@@ -658,6 +729,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 6,
     "color": "777221",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 4,
+      "veinsPerChunk": 4,
+      "minY": -10,
+      "maxY": 50
+    },
     "armor_stats": {
       "damage_reduction": [
         5,
@@ -675,14 +753,28 @@
     "hardness": 3.2,
     "blast_resistance": 10.0,
     "ore_harvest_level": 2,
-    "color": "B46C79"
+    "color": "B46C79",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 8,
+      "veinsPerChunk": 4,
+      "minY": -32,
+      "maxY": 128
+    }
   },
   {
     "name": "meutoite",
     "hardness": 3.6,
     "blast_resistance": 15.0,
     "ore_harvest_level": 5,
-    "color": "332E38"
+    "color": "332E38",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 7,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 128
+    }
   },
   {
     "name": "midasium",
@@ -690,6 +782,13 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": 4,
     "color": "FFBD45",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 6,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 64
+    },
     "armor_stats": {
       "damage_reduction": [
         4,
@@ -716,6 +815,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 5,
     "color": "69D3BE",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 5,
+      "veinsPerChunk": 4,
+      "minY": -32,
+      "maxY": 128
+    },
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -741,6 +847,13 @@
     "blast_resistance": 20.0,
     "ore_harvest_level": 4,
     "color": "9ABC51",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 6,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 128
+    },
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -766,6 +879,13 @@
     "blast_resistance": 20.0,
     "ore_harvest_level": 2,
     "color": "737496",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 6,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 20
+    },
     "armor_stats": {
       "damage_reduction": [
         5,
@@ -786,6 +906,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 3,
     "color": "EC8D69",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 6,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 96
+    },
     "armor_stats": {
       "damage_reduction": [
         4,
@@ -811,8 +938,15 @@
     "name": "platinum",
     "hardness": 4.4,
     "blast_resistance": 15.0,
-    "ore_harvest_level": 4,
+    "ore_harvest_level": 3,
     "color": "7193D4",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 4,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 80
+    },
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -840,6 +974,13 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": 1,
     "color": "6E9E61",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 6,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 64
+    },
     "armor_stats": {
       "damage_reduction": [
         1,
@@ -865,6 +1006,7 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": -1,
     "color": "62AAA2",
+    
     "armor_stats": {
       "damage_reduction": [
         5,
@@ -893,7 +1035,14 @@
     "hardness": 8.5,
     "blast_resistance": 10.0,
     "ore_harvest_level": 3,
-    "color": "BE3E52"
+    "color": "BE3E52",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 6,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 30
+    }
   },
   {
     "name": "sanguinite",
@@ -901,6 +1050,13 @@
     "blast_resistance": 20.0,
     "ore_harvest_level": 5,
     "color": "C34F4F",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 4,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 64
+    },
     "armor_stats": {
       "damage_reduction": [
         4,
@@ -929,6 +1085,13 @@
     "blast_resistance": 6.0,
     "ore_harvest_level": 3,
     "color": "806C72",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 7,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 32
+    },
     "armor_stats": {
       "damage_reduction": [
         4,
@@ -956,6 +1119,7 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": -1,
     "color": "C6BBB9",
+    
     "armor_stats": {
       "damage_reduction": [
         4,
@@ -981,6 +1145,13 @@
     "blast_resistance": 10.0,
     "ore_harvest_level": 2,
     "color": "CDD3D3",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 8,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 128
+    },
     "armor_stats": {
       "damage_reduction": [
         2,
@@ -1007,6 +1178,7 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": -1,
     "color": "BCBCBC",
+    
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -1032,6 +1204,7 @@
     "blast_resistance": 20.0,
     "ore_harvest_level": -1,
     "color": "EF7823",
+    
     "armor_stats": {
       "damage_reduction": [
         5,
@@ -1059,7 +1232,14 @@
     "hardness": 2.5,
     "blast_resistance": 6.0,
     "ore_harvest_level": 1,
-    "color": "A9A295"
+    "color": "A9A295",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 8,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 50
+    }
   },
   {
     "name": "vulcanite",
@@ -1067,6 +1247,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 4,
     "color": "E45930",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 5,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 39
+    },
     "armor_stats": {
       "damage_reduction": [
         3,
@@ -1092,6 +1279,13 @@
     "blast_resistance": 15.0,
     "ore_harvest_level": 5,
     "color": "5FC83F",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 5,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 60
+    },
     "armor_stats": {
       "damage_reduction": [
         4,
@@ -1116,6 +1310,13 @@
     "hardness": 2.0,
     "blast_resistance": 10.0,
     "ore_harvest_level": 1,
-    "color": "CACE84"
+    "color": "CACE84",
+    "ore_stats": {
+      "hasOre": true,
+      "veinSize": 8,
+      "veinsPerChunk": 4,
+      "minY": -64,
+      "maxY": 128
+    }
   }
 ]
