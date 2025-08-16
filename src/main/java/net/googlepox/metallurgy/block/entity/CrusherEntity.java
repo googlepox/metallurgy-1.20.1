@@ -319,6 +319,9 @@ public class CrusherEntity extends BlockEntity implements MenuProvider {
                         new PacketStartStopAmbienceSound(pPos)
                 ); */
             }
+            else if (crushTime > 0 && getCurrentRecipe().isEmpty()) {
+                this.crushTime = 0;
+            }
         }
         else
         {

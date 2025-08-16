@@ -24,10 +24,12 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.checkerframework.checker.units.qual.A;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,133 +45,195 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         Metallurgy.METALS.keySet().forEach(name -> {
+
+            Item itemRaw = MetalRegistry.RAW_ITEMS.get(name).get();
+            Item itemIngot = MetalRegistry.INGOTS.get(name).get();
+            Item itemNugget = MetalRegistry.NUGGETS.get(name).get();
+            Item itemDust = MetalRegistry.DUSTS.get(name).get();
+
+            Block blockMetal = MetalRegistry.METAL_BLOCKS.get(name).get();
+            Block blockBricks = MetalRegistry.METAL_BRICKS.get(name).get();
+
             if (MetalRegistry.ORE_BLOCKS.containsKey(name)) {
-                SimpleCookingRecipeBuilder.smelting(
-                                Ingredient.of(MetalRegistry.RAW_ITEMS.get(name).get()),
-                                RecipeCategory.MISC,
-                                MetalRegistry.INGOTS.get(name).get(), 0.7f, 200)
-                        .unlockedBy("has_" + name + "_raw", has(MetalRegistry.RAW_ITEMS.get(name).get()))
-                        .save(pWriter);
 
-                SimpleCookingRecipeBuilder.blasting(
-                                Ingredient.of(MetalRegistry.RAW_ITEMS.get(name).get()),
-                                RecipeCategory.MISC,
-                                MetalRegistry.INGOTS.get(name).get(), 0.7f, 100)
-                        .unlockedBy("has_" + name + "_raw", has(MetalRegistry.RAW_ITEMS.get(name).get()))
-                        .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_blasting");
-
-                SimpleCookingRecipeBuilder.smelting(
-                                Ingredient.of(MetalRegistry.RAW_ITEMS.get(name).get()),
-                                RecipeCategory.MISC,
-                                MetalRegistry.INGOTS.get(name).get(), 0.5f, 200)
-                        .unlockedBy("has_" + name + "_raw", has(MetalRegistry.RAW_ITEMS.get(name).get()))
-                        .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_smelting");
-
-                List<TagKey<Item>> inputItemsRaw = new ArrayList<>();
-                inputItemsRaw.add(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "raw_materials/" + name)));
-                ItemStack outputRaw = MetalRegistry.DUSTS.get(name).get().getDefaultInstance();
-                outputRaw.setCount(2);
-                pWriter.accept(new FinishedCrushingRecipe(
-                        new ResourceLocation(Metallurgy.MODID + ":" + name + "_dust_from_crushing_raw"),
-                        inputItemsRaw,
-                        outputRaw));
+                createBlastingRecipe(name, itemRaw, itemIngot, pWriter);
+                createSmeltingRecipe(name, itemRaw, itemIngot, pWriter);
+                createCrushingRawRecipe(name, itemDust, pWriter);
 
             }
 
             if (MetalRegistry.TOOLS_PICKAXE.containsKey(name)) {
-                ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, MetalRegistry.TOOLS_PICKAXE.get(name).get())
-                        .pattern("SSS")
-                        .pattern(" T ")
-                        .pattern(" T ")
-                        .define('S', MetalRegistry.INGOTS.get(name).get())
-                        .define('T', Tags.Items.RODS_WOODEN)
-                        .unlockedBy(getHasName(MetalRegistry.INGOTS.get(name).get()), has(MetalRegistry.INGOTS.get(name).get()))
-                        .save(pWriter, Metallurgy.MODID + ":" + name + "_pickaxe_from_ingots");
 
-                ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, MetalRegistry.TOOLS_AXE.get(name).get())
-                        .pattern("SS ")
-                        .pattern("ST ")
-                        .pattern(" T ")
-                        .define('S', MetalRegistry.INGOTS.get(name).get())
-                        .define('T', Tags.Items.RODS_WOODEN)
-                        .unlockedBy(getHasName(MetalRegistry.INGOTS.get(name).get()), has(MetalRegistry.INGOTS.get(name).get()))
-                        .save(pWriter, Metallurgy.MODID + ":" + name + "_axe_from_ingots");
+                createToolRecipes(name, itemIngot, pWriter);
 
-                ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, MetalRegistry.TOOLS_SWORD.get(name).get())
-                        .pattern(" S ")
-                        .pattern(" S ")
-                        .pattern(" T ")
-                        .define('S', MetalRegistry.INGOTS.get(name).get())
-                        .define('T', Tags.Items.RODS_WOODEN)
-                        .unlockedBy(getHasName(MetalRegistry.INGOTS.get(name).get()), has(MetalRegistry.INGOTS.get(name).get()))
-                        .save(pWriter, Metallurgy.MODID + ":" + name + "_sword_from_ingots");
-
-                ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, MetalRegistry.TOOLS_SHOVEL.get(name).get())
-                        .pattern(" S ")
-                        .pattern(" T ")
-                        .pattern(" T ")
-                        .define('S', MetalRegistry.INGOTS.get(name).get())
-                        .define('T', Tags.Items.RODS_WOODEN)
-                        .unlockedBy(getHasName(MetalRegistry.INGOTS.get(name).get()), has(MetalRegistry.INGOTS.get(name).get()))
-                        .save(pWriter, Metallurgy.MODID + ":" + name + "_shovel_from_ingots");
-
-                ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, MetalRegistry.TOOLS_HOE.get(name).get())
-                        .pattern("SS ")
-                        .pattern(" T ")
-                        .pattern(" T ")
-                        .define('S', MetalRegistry.INGOTS.get(name).get())
-                        .define('T', Tags.Items.RODS_WOODEN)
-                        .unlockedBy(getHasName(MetalRegistry.INGOTS.get(name).get()), has(MetalRegistry.INGOTS.get(name).get()))
-                        .save(pWriter, Metallurgy.MODID + ":" + name + "_hoe_from_ingots");
             }
 
-            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MetalRegistry.METAL_BLOCKS.get(name).get())
-                    .pattern("SSS")
-                    .pattern("SSS")
-                    .pattern("SSS")
-                    .define('S', MetalRegistry.INGOTS.get(name).get())
-                    .unlockedBy(getHasName(MetalRegistry.INGOTS.get(name).get()), has(MetalRegistry.INGOTS.get(name).get()))
-                    .save(pWriter, Metallurgy.MODID + ":" + name + "_block_from_ingots");
+            createBlockAndIngotRecipes(name, itemIngot, itemNugget, blockMetal, blockBricks, pWriter);
 
-            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MetalRegistry.INGOTS.get(name).get())
-                    .pattern("SSS")
-                    .pattern("SSS")
-                    .pattern("SSS")
-                    .define('S', MetalRegistry.NUGGETS.get(name).get())
-                    .unlockedBy(getHasName(MetalRegistry.NUGGETS.get(name).get()), has(MetalRegistry.NUGGETS.get(name).get()))
-                    .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_nuggets");
+            createCrushingIngotRecipe(name, itemDust, pWriter);
 
-            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MetalRegistry.METAL_BRICKS.get(name).get())
-                    .pattern("SS")
-                    .pattern("SS")
-                    .define('S', MetalRegistry.INGOTS.get(name).get())
-                    .unlockedBy(getHasName(MetalRegistry.INGOTS.get(name).get()), has(MetalRegistry.INGOTS.get(name).get()))
-                    .save(pWriter, Metallurgy.MODID + ":" + name + "_bricks_from_ingots");
-
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MetalRegistry.INGOTS.get(name).get(), 9)
-                    .requires(MetalRegistry.METAL_BLOCKS.get(name).get())
-                    .unlockedBy(getHasName(MetalRegistry.METAL_BLOCKS.get(name).get()), has(MetalRegistry.METAL_BLOCKS.get(name).get()))
-                    .save(pWriter, Metallurgy.MODID + ":" + name + "_ingots_from_block");
-
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MetalRegistry.NUGGETS.get(name).get(), 9)
-                    .requires(MetalRegistry.INGOTS.get(name).get())
-                    .unlockedBy(getHasName(MetalRegistry.INGOTS.get(name).get()), has(MetalRegistry.INGOTS.get(name).get()))
-                    .save(pWriter, Metallurgy.MODID + ":" + name + "_nuggets_from_ingot");
-
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, MetalRegistry.INGOTS.get(name).get(), 4)
-                    .requires(MetalRegistry.METAL_BRICKS.get(name).get())
-                    .unlockedBy(getHasName(MetalRegistry.METAL_BRICKS.get(name).get()), has(MetalRegistry.METAL_BRICKS.get(name).get()))
-                    .save(pWriter, Metallurgy.MODID + ":" + name + "_ingots_from_bricks");
-
-
-            List<TagKey<Item>> inputItemsIngot = new ArrayList<>();
-            inputItemsIngot.add(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "ingots/" + name)));
-            ItemStack outputRaw = MetalRegistry.DUSTS.get(name).get().getDefaultInstance();
-            pWriter.accept(new FinishedCrushingRecipe(
-                    new ResourceLocation(Metallurgy.MODID + ":" + name + "_dust_from_crushing_ingot"),
-                    inputItemsIngot,
-                    outputRaw));
         });
+    }
+
+    private static void createBlastingRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(input),
+                        RecipeCategory.MISC,
+                        output, 0.7f, 100)
+                .unlockedBy("has_" + name + "_raw", has(input))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_blasting");
+    }
+
+    private static void createSmeltingRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(input),
+                        RecipeCategory.MISC,
+                        output, 0.7f, 100)
+                .unlockedBy("has_" + name + "_raw", has(input))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_smelting");
+    }
+
+    private static void createCrushingRawRecipe(String name, Item dustOutput, Consumer<FinishedRecipe> pWriter) {
+        List<TagKey<Item>> inputItemsRaw = new ArrayList<>();
+        inputItemsRaw.add(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "raw_materials/" + name)));
+        ItemStack outputRaw = dustOutput.getDefaultInstance();
+        outputRaw.setCount(2);
+        pWriter.accept(new FinishedCrushingRecipe(
+                new ResourceLocation(Metallurgy.MODID + ":" + name + "_dust_from_crushing_raw"),
+                inputItemsRaw,
+                outputRaw));
+    }
+
+    private static void createCrushingIngotRecipe(String name, Item dustOutput, Consumer<FinishedRecipe> pWriter) {
+        List<TagKey<Item>> inputItemsIngot = new ArrayList<>();
+        inputItemsIngot.add(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "ingots/" + name)));
+        ItemStack outputRaw = MetalRegistry.DUSTS.get(name).get().getDefaultInstance();
+        pWriter.accept(new FinishedCrushingRecipe(
+                new ResourceLocation(Metallurgy.MODID + ":" + name + "_dust_from_crushing_ingot"),
+                inputItemsIngot,
+                outputRaw));
+    }
+
+    private void createToolRecipes(String name, Item input, Consumer<FinishedRecipe> pWriter) {
+        createPickaxeRecipe(name, input, MetalRegistry.TOOLS_PICKAXE.get(name).get(), pWriter);
+        createSwordRecipe(name, input, MetalRegistry.TOOLS_SWORD.get(name).get(), pWriter);
+        createAxeRecipe(name, input, MetalRegistry.TOOLS_AXE.get(name).get(), pWriter);
+        createShovelRecipe(name, input, MetalRegistry.TOOLS_SHOVEL.get(name).get(), pWriter);
+        createHoeRecipe(name, input, MetalRegistry.TOOLS_HOE.get(name).get(), pWriter);
+    }
+
+    private void createBlockAndIngotRecipes(String name, Item ingot, Item nugget, Block block, Block brick, Consumer<FinishedRecipe> pWriter) {
+        createMetalBlockRecipe(name, ingot, block, pWriter);
+        createMetalBrickRecipe(name, ingot, brick, pWriter);
+        createIngotFromBlockRecipe(name, block, ingot, pWriter);
+        createIngotFromBrickRecipe(name, brick, ingot, pWriter);
+        createNuggetFromIngotRecipe(name, nugget, ingot, pWriter);
+        createIngotFromNuggetRecipe(name, ingot, nugget, pWriter);
+    }
+
+    private void createMetalBlockRecipe(String name, Item ingot, Block block, Consumer<FinishedRecipe> pWriter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, block)
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', ingot)
+                .unlockedBy(getHasName(ingot), has(ingot))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_block_from_ingots");
+    }
+
+    private void createMetalBrickRecipe(String name, Item ingot, Block brick, Consumer<FinishedRecipe> pWriter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, brick)
+                .pattern("SS")
+                .pattern("SS")
+                .define('S', ingot)
+                .unlockedBy(getHasName(ingot), has(ingot))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_bricks_from_ingots");
+    }
+
+    private void createIngotFromBlockRecipe(String name, Block block, Item ingot, Consumer<FinishedRecipe> pWriter) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 9)
+                .requires(block)
+                .unlockedBy(getHasName(block), has(block))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingots_from_block");
+    }
+
+    private void createIngotFromBrickRecipe(String name, Block brick, Item ingot, Consumer<FinishedRecipe> pWriter) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 4)
+                .requires(brick)
+                .unlockedBy(getHasName(brick), has(brick))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingots_from_bricks");
+    }
+
+    private void createIngotFromNuggetRecipe(String name, Item ingot, Item nugget, Consumer<FinishedRecipe> pWriter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ingot)
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', nugget)
+                .unlockedBy(getHasName(nugget), has(nugget))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_nuggets");
+    }
+
+    private void createNuggetFromIngotRecipe(String name, Item nugget, Item ingot, Consumer<FinishedRecipe> pWriter) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, nugget, 9)
+                .requires(ingot)
+                .unlockedBy(getHasName(ingot), has(ingot))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_nuggets_from_ingot");
+    }
+
+    private static void createPickaxeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
+                .pattern("SSS")
+                .pattern(" T ")
+                .pattern(" T ")
+                .define('S', input)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .unlockedBy(getHasName(input), has(input))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_pickaxe_from_ingots");
+    }
+
+    private static void createSwordRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
+                .pattern(" S ")
+                .pattern(" S ")
+                .pattern(" T ")
+                .define('S', input)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .unlockedBy(getHasName(input), has(input))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_sword_from_ingots");
+    }
+
+    private static void createShovelRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
+                .pattern(" S ")
+                .pattern(" T ")
+                .pattern(" T ")
+                .define('S', input)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .unlockedBy(getHasName(input), has(input))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_shovel_from_ingots");
+    }
+
+    private static void createAxeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
+                .pattern("SS ")
+                .pattern("ST ")
+                .pattern(" T ")
+                .define('S', input)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .unlockedBy(getHasName(input), has(input))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_axe_from_ingots");
+    }
+
+    private static void createHoeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
+                .pattern("SS ")
+                .pattern(" T ")
+                .pattern(" T ")
+                .define('S', input)
+                .define('T', Tags.Items.RODS_WOODEN)
+                .unlockedBy(getHasName(input), has(input))
+                .save(pWriter, Metallurgy.MODID + ":" + name + "_hoe_from_ingots");
     }
 
     // Custom FinishedRecipe implementation for our recipe type
