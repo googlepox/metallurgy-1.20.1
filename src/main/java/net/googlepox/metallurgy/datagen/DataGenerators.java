@@ -1,6 +1,8 @@
 package net.googlepox.metallurgy.datagen;
 
 import net.googlepox.metallurgy.Metallurgy;
+import net.googlepox.metallurgy.block.ModBlocks;
+import net.googlepox.metallurgy.item.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -20,7 +22,6 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
         generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
 
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
@@ -33,5 +34,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
 
         generator.addProvider(event.includeClient(), new ModLanguageProvider(packOutput, Metallurgy.MODID, "en_us"));
+
+        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
     }
 }

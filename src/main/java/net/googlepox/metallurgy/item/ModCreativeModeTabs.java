@@ -44,6 +44,29 @@ public class ModCreativeModeTabs {
                             pOutput.accept(MetalRegistry.METAL_BRICKS.get(name).get());
 
                         });
+                        pOutput.accept(ModBlocks.BITUMEN_BLOCK.get());
+                        pOutput.accept(ModItems.BITUMEN.get());
+
+                        pOutput.accept(ModItems.PHOSPHORUS.get());
+                        pOutput.accept(ModBlocks.PHOSPHORITE_ORE.get());
+                        pOutput.accept(ModBlocks.PHOSPHORITE_ORE_DEEPSLATE.get());
+                        pOutput.accept(ModBlocks.PHOSPHORITE_ORE_NETHER.get());
+                        pOutput.accept(ModBlocks.PHOSPHORITE_ORE_END_STONE.get());
+
+                        pOutput.accept(ModItems.SULFUR.get());
+                        pOutput.accept(ModBlocks.SULFUR_ORE.get());
+                        pOutput.accept(ModBlocks.SULFUR_ORE_DEEPSLATE.get());
+                        pOutput.accept(ModBlocks.SULFUR_ORE_NETHER.get());
+                        pOutput.accept(ModBlocks.SULFUR_ORE_END_STONE.get());
+
+                        pOutput.accept(ModItems.POTASH.get());
+                        pOutput.accept(ModItems.POTASH_DUST.get());
+                        pOutput.accept(ModBlocks.POTASH_ORE.get());
+                        pOutput.accept(ModBlocks.POTASH_ORE_DEEPSLATE.get());
+                        pOutput.accept(ModBlocks.POTASH_ORE_NETHER.get());
+                        pOutput.accept(ModBlocks.POTASH_ORE_END_STONE.get());
+
+                        pOutput.accept(ModBlocks.CRUSHER.get());
                     })
                     .build());
 

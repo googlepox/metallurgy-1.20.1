@@ -47,8 +47,11 @@ public class ModTags {
                item = createMetalTag("raw_materials/" + name);
                rawTags.put(name, item);
                TAG_TO_METAL.put(item, name);
-
             });
+            dustTags.put("iron_dust", createMetalTag("dusts/iron"));
+            dustTags.put("copper_dust", createMetalTag("dusts/copper"));
+            dustTags.put("gold_dust", createMetalTag("dusts/gold"));
+
         }
 
         private static TagKey<Item> tag(String name) {

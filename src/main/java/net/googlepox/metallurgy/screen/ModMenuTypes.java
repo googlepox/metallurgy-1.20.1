@@ -2,9 +2,7 @@ package net.googlepox.metallurgy.screen;
 
 import net.googlepox.metallurgy.Metallurgy;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.network.IContainerFactory;

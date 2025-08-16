@@ -47,7 +47,7 @@ public class CrusherScreen extends AbstractContainerScreen<CrusherMenu> {
     }
 
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
-        if(menu.isCrafting()) {
+        if(menu.data.get(0) > 0) {
             int k = this.getBurnLeftScaled(16);
             guiGraphics.blit(TEXTURE, leftPos + 128, topPos + 46 - k, 176, 77 - k, 17, k + 1);
         }
@@ -62,7 +62,11 @@ public class CrusherScreen extends AbstractContainerScreen<CrusherMenu> {
 
     private int getBurnLeftScaled(int pixels)
     {
-        return this.menu.blockEntity.data.get(0) * pixels / this.menu.blockEntity.data.get(1);
+        int burnTime = this.menu.data.get(0);
+        int totalBurnTime = this.menu.data.get(1);
+        Metallurgy.logger.info("burnTime: " + burnTime);
+        Metallurgy.logger.info("totalBurnTime: " + totalBurnTime);
+        return burnTime * pixels / totalBurnTime;
     }
 
     /**
@@ -70,7 +74,7 @@ public class CrusherScreen extends AbstractContainerScreen<CrusherMenu> {
      */
     private int getCrushProgressScaled(int pixels)
     {
-        int crushingTime = this.menu.blockEntity.data.get(2);
+        int crushingTime = this.menu.data.get(2);
         return crushingTime != 0 ? crushingTime * pixels / CrusherEntity.TOTAL_CRUSHING_TIME : 0;
     }
 }

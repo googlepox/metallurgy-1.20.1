@@ -11,8 +11,10 @@ import net.googlepox.metallurgy.item.ModItems;
 import net.googlepox.metallurgy.material.MetalStats;
 import net.googlepox.metallurgy.material.ModMetals;
 import net.googlepox.metallurgy.recipe.ModRecipes;
+import net.googlepox.metallurgy.screen.CrusherScreen;
 import net.googlepox.metallurgy.screen.ModMenuTypes;
 import net.googlepox.metallurgy.util.ModTags;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraftforge.api.distmarker.Dist;
@@ -63,10 +65,10 @@ public class Metallurgy {
         MetalRegistry.BLOCKS.register(modEventBus);
         MetalRegistry.ITEMS.register(modEventBus);
 
-        //ModBlockEntities.register(modEventBus);
-        //ModMenuTypes.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
-        //ModRecipes.register(modEventBus);
+        ModRecipes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -97,7 +99,7 @@ public class Metallurgy {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            MenuScreens.register(ModMenuTypes.CRUSHING_MENU.get(), CrusherScreen::new);
         }
     }
 }

@@ -38,15 +38,18 @@ public class ModItemTagProvider extends ItemTagsProvider {
             this.tag(Tags.Items.INGOTS).add(MetalRegistry.INGOTS.get(name).get());
             this.tag(Tags.Items.DUSTS).add(MetalRegistry.DUSTS.get(name).get());
             this.tag(Tags.Items.NUGGETS).add(MetalRegistry.NUGGETS.get(name).get());
-            this.tag(Tags.Items.DUSTS).add(ModItems.COPPER_DUST.get());
-            this.tag(Tags.Items.DUSTS).add(ModItems.IRON_DUST.get());
-            this.tag(Tags.Items.DUSTS).add(ModItems.GOLD_DUST.get());
-            this.tag(Tags.Items.DUSTS).add(ModItems.POTASH_DUST.get());
 
             this.tag(ModTags.Items.ingotTags.get(name)).add(MetalRegistry.INGOTS.get(name).get());
             this.tag(ModTags.Items.nuggetTags.get(name)).add(MetalRegistry.NUGGETS.get(name).get());
             this.tag(ModTags.Items.dustTags.get(name)).add(MetalRegistry.DUSTS.get(name).get());
             this.tag(ModTags.Items.rawTags.get(name)).add(MetalRegistry.RAW_ITEMS.get(name).get());
         });
+        this.tag(Tags.Items.DUSTS).add(ModItems.COPPER_DUST.get());
+        this.tag(Tags.Items.DUSTS).add(ModItems.IRON_DUST.get());
+        this.tag(Tags.Items.DUSTS).add(ModItems.GOLD_DUST.get());
+        this.tag(Tags.Items.DUSTS).add(ModItems.POTASH_DUST.get());
+        this.tag(ModTags.Items.dustTags.get("copper_dust")).add(ModItems.COPPER_DUST.get());
+        this.tag(ModTags.Items.dustTags.get("gold_dust")).add(ModItems.GOLD_DUST.get());
+        this.tag(ModTags.Items.dustTags.get("iron_dust")).add(ModItems.IRON_DUST.get());
     }
 }
