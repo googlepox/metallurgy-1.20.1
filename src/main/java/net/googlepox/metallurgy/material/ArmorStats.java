@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 public class ArmorStats implements ArmorMaterial {
 
     private final String name;
-    private final int durabilityMultiplier;
+    private final int durability;
     private final int[] protectionAmounts;
     private final int enchantmentValue;
     private final SoundEvent equipSound;
@@ -25,7 +25,7 @@ public class ArmorStats implements ArmorMaterial {
     public ArmorStats(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantmentValue, SoundEvent equipSound,
                       float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
         this.name = name;
-        this.durabilityMultiplier = durabilityMultiplier;
+        this.durability = durabilityMultiplier;
         this.protectionAmounts = protectionAmounts;
         this.enchantmentValue = enchantmentValue;
         this.equipSound = equipSound;
@@ -36,7 +36,7 @@ public class ArmorStats implements ArmorMaterial {
 
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
-        return BASE_DURABILITY[pType.ordinal()] * this.durabilityMultiplier;
+        return BASE_DURABILITY[pType.ordinal()] * this.durability;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ArmorStats implements ArmorMaterial {
         return this.knockbackResistance;
     }
 
-    public int getDurabilityMultiplier() { return this.durabilityMultiplier; }
+    public int getDurability() { return this.durability; }
 
     public int[] getProtectionAmounts() { return this.protectionAmounts; }
 }

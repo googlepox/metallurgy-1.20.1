@@ -3,10 +3,12 @@ package net.googlepox.metallurgy.util;
 import net.googlepox.metallurgy.Metallurgy;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +62,21 @@ public class ModTags {
 
         private static TagKey<Item> createMetalTag(String name) {
             return ItemTags.create(new ResourceLocation("forge", name));
+        }
+    }
+
+    public static class Fluids {
+        public static Map<String, TagKey<Fluid>> fluidTags = new HashMap<>();
+
+        public static void createTags() {
+            Metallurgy.METALS.forEach((name, stats) -> {
+                TagKey<Fluid> fluid = tag(name);
+                fluidTags.put(name, fluid);
+            });
+        }
+
+        private static TagKey<Fluid> tag(String name) {
+            return FluidTags.create(new ResourceLocation(Metallurgy.MODID, name));
         }
     }
 }

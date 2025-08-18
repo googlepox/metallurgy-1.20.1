@@ -109,7 +109,8 @@ public class MetalStats {
 
     public int getTemperature()
     {
-        return temperature;
+        return 1000;
+        //return automaticTemperature();
     }
 
     public OreStats getOreStats() {

@@ -81,6 +81,8 @@ public class ModLanguageProvider extends LanguageProvider {
 
             this.add("block.metallurgy." + name + "_block", "Block of " + Utils.capitalize(translatedName));
             this.add("block.metallurgy." + name + "_bricks", Utils.capitalize(translatedName) + " Bricks");
+
+            this.add("fluid_type.metallurgy.molten_" + name, "Molten " + Utils.capitalize(translatedName));
         });
     }
 }

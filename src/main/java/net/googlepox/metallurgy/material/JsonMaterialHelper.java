@@ -115,7 +115,7 @@ public class JsonMaterialHelper {
             JsonObject armorStatsObj = GsonHelper.getAsJsonObject(metalStats, "armor_stats");
 
             int enchantability = GsonHelper.getAsInt(armorStatsObj, "enchantability", fallback.getEnchantmentValue());
-            int durability = GsonHelper.getAsInt(armorStatsObj, "durability", fallback.getDurabilityMultiplier());
+            int durability = GsonHelper.getAsInt(armorStatsObj, "durability", fallback.getDurability());
             float toughness = GsonHelper.getAsFloat(armorStatsObj, "toughness", fallback.getToughness());
             int[] damageReduction = getAsIntArray(armorStatsObj, "damage_reduction", fallback.getProtectionAmounts());
             float knockbackResistance = GsonHelper.getAsFloat(armorStatsObj, "knockback_resistance", (float) fallback.getKnockbackResistance());

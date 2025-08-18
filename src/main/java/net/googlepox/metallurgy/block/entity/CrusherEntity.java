@@ -196,7 +196,6 @@ public class CrusherEntity extends BlockEntity implements MenuProvider {
         pTag.putInt("fuel_boost", fuelSpeedBoost);
         pTag.putInt("ambience_tick", ambienceTick);
         super.saveAdditional(pTag);
-        Metallurgy.logger.info("saved inventory");
     }
 
     @Override
@@ -204,7 +203,6 @@ public class CrusherEntity extends BlockEntity implements MenuProvider {
         super.load(pTag);
 
         if(pTag.contains("TopInventory", Tag.TAG_COMPOUND)) {
-            Metallurgy.logger.info("contains topinventory");
             this.topInventory.deserializeNBT(pTag.getCompound("TopInventory"));
         }
 
@@ -215,7 +213,6 @@ public class CrusherEntity extends BlockEntity implements MenuProvider {
         if(pTag.contains("BottomInventory", Tag.TAG_COMPOUND)) {
             this.bottomInventory.deserializeNBT(pTag.getCompound("BottomInventory"));
         }
-        Metallurgy.logger.info("loaded inventory");
         this.burnTime = pTag.getInt("burn_time");
         this.crushTime = pTag.getInt("crush_time");
         this.totalBurnTime = pTag.getInt("total_burn_time");
@@ -248,7 +245,6 @@ public class CrusherEntity extends BlockEntity implements MenuProvider {
         SimpleContainer inventoryTop = new SimpleContainer(this.topInventory.getSlots());
         for(int i = 0; i < topInventory.getSlots(); i++) {
             inventoryTop.setItem(i, this.topInventory.getStackInSlot(i));
-            Metallurgy.logger.info("item: " + inventoryTop.getItem(i));
         }
         return this.level.getRecipeManager().getRecipeFor(CrusherRecipe.Type.INSTANCE, inventoryTop, level);
     }
@@ -406,33 +402,25 @@ public class CrusherEntity extends BlockEntity implements MenuProvider {
     {
 
         Optional<CrusherRecipe> recipe = getCurrentRecipe();
-        Metallurgy.logger.info("test1");
         ItemStack input = this.topInventory.getStackInSlot(INPUT_SLOT);
-        Metallurgy.logger.info("test2");
         if (input.isEmpty() || recipe.isEmpty())
             return false;
         else
         {
-            Metallurgy.logger.info("test3");
             ItemStack result = recipe.get().getResultItem(null);
-            Metallurgy.logger.info("test4");
             if (result.isEmpty())
                 return false;
             else
             {
-                Metallurgy.logger.info("test5");
                 ItemStack output = this.bottomInventory.getStackInSlot(OUTPUT_SLOT_0);
                 ItemStack output1 = this.bottomInventory.getStackInSlot(OUTPUT_SLOT_1);
                 ItemStack output2 = this.bottomInventory.getStackInSlot(OUTPUT_SLOT_2);
-                Metallurgy.logger.info("test6");
                 int totalAmount = output.getCount() + result.getCount();
                 int totalAmount1 = output1.getCount() + result.getCount();
                 int totalAmount2 = output2.getCount() + result.getCount();
-                Metallurgy.logger.info("test7");
                 //can crush if one of the various outputs is empty
                 if (output.isEmpty() || output1.isEmpty() || output2.isEmpty())
                     return true;
-                Metallurgy.logger.info("test8");
                 //Can't crush if all of the output slots are filled with an item that is different from the recipe result
                 if (!ItemStack.isSameItem(output, result) && !ItemStack.isSameItem(output1, result) && !ItemStack.isSameItem(output2, result))
                     return false;

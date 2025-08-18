@@ -5,7 +5,10 @@ import com.google.gson.JsonObject;
 import net.googlepox.metallurgy.Metallurgy;
 import net.googlepox.metallurgy.block.ModBlocks;
 import net.googlepox.metallurgy.core.MetalRegistry;
+import net.googlepox.metallurgy.datagen.integration.tconstruct.TConRecipeHelper;
+import net.googlepox.metallurgy.integration.tic.material.MetallurgyTiCStats;
 import net.googlepox.metallurgy.item.ModItems;
+import net.googlepox.metallurgy.material.MetalStats;
 import net.googlepox.metallurgy.recipe.CrusherRecipe;
 import net.googlepox.metallurgy.util.ModTags;
 import net.minecraft.core.NonNullList;
@@ -25,18 +28,33 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import slimeknights.mantle.recipe.data.IRecipeHelper;
+import slimeknights.mantle.recipe.helper.FluidOutput;
+import slimeknights.mantle.recipe.helper.ItemOutput;
+import slimeknights.mantle.registration.object.FluidObject;
+import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.library.data.recipe.IMaterialRecipeHelper;
+import slimeknights.tconstruct.library.materials.definition.MaterialId;
+import slimeknights.tconstruct.library.recipe.FluidValues;
+import slimeknights.tconstruct.library.recipe.casting.ItemCastingRecipeBuilder;
+import slimeknights.tconstruct.library.recipe.casting.material.MaterialFluidRecipeBuilder;
+import slimeknights.tconstruct.library.recipe.melting.MaterialMeltingRecipeBuilder;
+import slimeknights.tconstruct.library.recipe.melting.MeltingRecipeBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
+public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder, TConRecipeHelper, IMaterialRecipeHelper {
 
     public ModRecipeProvider(PackOutput pOutput) {
         super(pOutput);
@@ -44,7 +62,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
-        Metallurgy.METALS.keySet().forEach(name -> {
+        Metallurgy.METALS.forEach((name, stats) -> {
 
             Item itemRaw = MetalRegistry.RAW_ITEMS.get(name).get();
             Item itemIngot = MetalRegistry.INGOTS.get(name).get();
@@ -72,25 +90,27 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
             createCrushingIngotRecipe(name, itemDust, pWriter);
 
+            createTinkerRecipes(name, stats, pWriter);
+
         });
     }
 
-    private static void createBlastingRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+    private void createBlastingRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(input),
                         RecipeCategory.MISC,
                         output, 0.7f, 100)
                 .unlockedBy("has_" + name + "_raw", has(input))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_blasting");
+                .save(pWriter, prefix(MetalRegistry.INGOTS.get(name), name + blastingFolder));
     }
 
-    private static void createSmeltingRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+    private void createSmeltingRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(input),
                         RecipeCategory.MISC,
                         output, 0.7f, 100)
                 .unlockedBy("has_" + name + "_raw", has(input))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_smelting");
+                .save(pWriter, prefix(MetalRegistry.INGOTS.get(name), name + smeltingFolder));
     }
 
     private static void createCrushingRawRecipe(String name, Item dustOutput, Consumer<FinishedRecipe> pWriter) {
@@ -99,7 +119,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ItemStack outputRaw = dustOutput.getDefaultInstance();
         outputRaw.setCount(2);
         pWriter.accept(new FinishedCrushingRecipe(
-                new ResourceLocation(Metallurgy.MODID + ":" + name + "_dust_from_crushing_raw"),
+                new ResourceLocation(Metallurgy.MODID + ":" + crushingFolder + name + "/" + name + "_dust_from_crushing_raw"),
                 inputItemsRaw,
                 outputRaw));
     }
@@ -109,7 +129,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         inputItemsIngot.add(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "ingots/" + name)));
         ItemStack outputRaw = MetalRegistry.DUSTS.get(name).get().getDefaultInstance();
         pWriter.accept(new FinishedCrushingRecipe(
-                new ResourceLocation(Metallurgy.MODID + ":" + name + "_dust_from_crushing_ingot"),
+                new ResourceLocation(Metallurgy.MODID + ":" + crushingFolder + name + "/" + name + "_dust_from_crushing_ingot"),
                 inputItemsIngot,
                 outputRaw));
     }
@@ -138,7 +158,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("SSS")
                 .define('S', ingot)
                 .unlockedBy(getHasName(ingot), has(ingot))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_block_from_ingots");
+                .save(pWriter, prefix(MetalRegistry.METAL_BLOCKS.get(name), name + "/"));
     }
 
     private void createMetalBrickRecipe(String name, Item ingot, Block brick, Consumer<FinishedRecipe> pWriter) {
@@ -147,21 +167,21 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("SS")
                 .define('S', ingot)
                 .unlockedBy(getHasName(ingot), has(ingot))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_bricks_from_ingots");
+                .save(pWriter, prefix(MetalRegistry.METAL_BRICKS.get(name), name + "/"));
     }
 
     private void createIngotFromBlockRecipe(String name, Block block, Item ingot, Consumer<FinishedRecipe> pWriter) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 9)
                 .requires(block)
                 .unlockedBy(getHasName(block), has(block))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingots_from_block");
+                .save(pWriter, prefix(ResourceLocation.parse(MetalRegistry.INGOTS.get(name).getId() + "_from_block"), name + ingotsFolder));
     }
 
     private void createIngotFromBrickRecipe(String name, Block brick, Item ingot, Consumer<FinishedRecipe> pWriter) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 4)
                 .requires(brick)
                 .unlockedBy(getHasName(brick), has(brick))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingots_from_bricks");
+                .save(pWriter, prefix(ResourceLocation.parse(MetalRegistry.INGOTS.get(name).getId() + "_from_brick"), name + ingotsFolder));
     }
 
     private void createIngotFromNuggetRecipe(String name, Item ingot, Item nugget, Consumer<FinishedRecipe> pWriter) {
@@ -171,17 +191,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("SSS")
                 .define('S', nugget)
                 .unlockedBy(getHasName(nugget), has(nugget))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_ingot_from_nuggets");
+                .save(pWriter, prefix(ResourceLocation.parse(MetalRegistry.INGOTS.get(name).get() + "_from_nuggets"), name + ingotsFolder));
     }
 
     private void createNuggetFromIngotRecipe(String name, Item nugget, Item ingot, Consumer<FinishedRecipe> pWriter) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, nugget, 9)
                 .requires(ingot)
                 .unlockedBy(getHasName(ingot), has(ingot))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_nuggets_from_ingot");
+                .save(pWriter, prefix(ResourceLocation.parse(MetalRegistry.NUGGETS.get(name).getId() + "_from_ingot"), name + nuggetsFolder));
     }
 
-    private static void createPickaxeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+    private void createPickaxeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
                 .pattern("SSS")
                 .pattern(" T ")
@@ -189,10 +209,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', input)
                 .define('T', Tags.Items.RODS_WOODEN)
                 .unlockedBy(getHasName(input), has(input))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_pickaxe_from_ingots");
+                .save(pWriter, prefix(MetalRegistry.TOOLS_PICKAXE.get(name), toolsFolder));
     }
 
-    private static void createSwordRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+    private void createSwordRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
                 .pattern(" S ")
                 .pattern(" S ")
@@ -200,10 +220,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', input)
                 .define('T', Tags.Items.RODS_WOODEN)
                 .unlockedBy(getHasName(input), has(input))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_sword_from_ingots");
+                .save(pWriter, prefix(MetalRegistry.TOOLS_SWORD.get(name), toolsFolder));
     }
 
-    private static void createShovelRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+    private void createShovelRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
                 .pattern(" S ")
                 .pattern(" T ")
@@ -211,10 +231,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', input)
                 .define('T', Tags.Items.RODS_WOODEN)
                 .unlockedBy(getHasName(input), has(input))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_shovel_from_ingots");
+                .save(pWriter, prefix(MetalRegistry.TOOLS_SHOVEL.get(name), toolsFolder));
     }
 
-    private static void createAxeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+    private void createAxeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
                 .pattern("SS ")
                 .pattern("ST ")
@@ -222,10 +242,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', input)
                 .define('T', Tags.Items.RODS_WOODEN)
                 .unlockedBy(getHasName(input), has(input))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_axe_from_ingots");
+                .save(pWriter, prefix(MetalRegistry.TOOLS_AXE.get(name), toolsFolder));
     }
 
-    private static void createHoeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
+    private void createHoeRecipe(String name, Item input, Item output, Consumer<FinishedRecipe> pWriter) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, output)
                 .pattern("SS ")
                 .pattern(" T ")
@@ -233,7 +253,80 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', input)
                 .define('T', Tags.Items.RODS_WOODEN)
                 .unlockedBy(getHasName(input), has(input))
-                .save(pWriter, Metallurgy.MODID + ":" + name + "_hoe_from_ingots");
+                .save(pWriter, prefix(MetalRegistry.TOOLS_HOE.get(name), toolsFolder));
+    }
+
+    private void createTinkerRecipes(String name, MetalStats stats, Consumer<FinishedRecipe> pWriter) {
+
+        metalMaterialRecipe(pWriter, MetallurgyTiCStats.MATERIALS.get(name), materialFolder, name, false);
+        buildMaterialRecipes(name, stats, pWriter);
+        buildSmelteryRecipes(name, stats, pWriter);
+        buildAlloyRecipes(name, stats, pWriter);
+    }
+
+    public void buildMaterialRecipes(String name, MetalStats stats, Consumer<FinishedRecipe> pWriter) {
+        MaterialFluidRecipeBuilder.material(MetallurgyTiCStats.MATERIALS.get(name))
+                .setTemperature(stats.getTemperature())
+                .setFluid(ModTags.Fluids.fluidTags.get(name), FluidValues.INGOT)
+                .save(pWriter, prefix(MetallurgyTiCStats.MATERIALS.get(name), materialCastingFolder));
+
+        MaterialMeltingRecipeBuilder.material(MetallurgyTiCStats.MATERIALS.get(name), stats.getTemperature(), new FluidStack(MetalRegistry.METAL_FLUIDS.get(name).get(), FluidValues.INGOT))
+                .save(pWriter, prefix(MetallurgyTiCStats.MATERIALS.get(name), materialMeltingFolder));
+
+    }
+
+    public void buildSmelteryRecipes(String name, MetalStats stats, Consumer<FinishedRecipe> pWriter) {
+
+        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(MetalRegistry.METAL_BLOCKS.get(name).get()))
+                .setFluidAndTime(MetalRegistry.METAL_FLUIDS.get(name), 900)
+                .setCoolingTime(800)
+                .save(pWriter, prefix(MetalRegistry.METAL_BLOCKS.get(name), smelteryCastingFolder + "block_casts/"));
+
+        ItemCastingRecipeBuilder.tableRecipe(MetalRegistry.INGOTS.get(name).get())
+                .setFluid(ModTags.Fluids.fluidTags.get(name), 100)
+                .setCast(TinkerTags.Items.CASTS, false)
+                .setCoolingTime(125)
+                .save(pWriter, prefix(MetalRegistry.INGOTS.get(name), smelteryCastingFolder + "ingot_casts/"));
+
+        MeltingRecipeBuilder.melting(Ingredient.of(MetalRegistry.INGOTS.get(name).get()),
+                        FluidOutput.fromFluid(MetalRegistry.METAL_FLUIDS.get(name).get(), 100), stats.getTemperature(), (int) 32)
+                .save(pWriter, prefix(MetalRegistry.INGOTS.get(name), smelteryMeltingFolder));
+
+        MeltingRecipeBuilder.melting(Ingredient.of(MetalRegistry.DUSTS.get(name).get()),
+                        FluidOutput.fromFluid(MetalRegistry.METAL_FLUIDS.get(name).get(), 100), stats.getTemperature(), (int) 32)
+                .save(pWriter, prefix(MetalRegistry.DUSTS.get(name), smelteryMeltingFolder));
+
+        if (stats.getOreStats() != null && stats.getOreStats().getHasOre()) {
+            MeltingRecipeBuilder.melting(Ingredient.of(MetalRegistry.RAW_ITEMS.get(name).get()),
+                            FluidOutput.fromFluid(MetalRegistry.METAL_FLUIDS.get(name).get(), 150), stats.getTemperature(), (int) 32)
+                    .save(pWriter, prefix(MetalRegistry.RAW_ITEMS.get(name), smelteryMeltingFolder));
+        }
+
+        MeltingRecipeBuilder.melting(Ingredient.of(MetalRegistry.METAL_BLOCKS.get(name).get()),
+                        FluidOutput.fromFluid(MetalRegistry.METAL_FLUIDS.get(name).get(), 900), stats.getTemperature(), (int) 32)
+                .save(pWriter, prefix(MetalRegistry.METAL_BLOCKS.get(name), smelteryMeltingFolder));
+
+        MeltingRecipeBuilder.melting(Ingredient.of(MetalRegistry.METAL_BRICKS.get(name).get()),
+                        FluidOutput.fromFluid(MetalRegistry.METAL_FLUIDS.get(name).get(), 400), stats.getTemperature(), (int) 32)
+                .save(pWriter, prefix(MetalRegistry.METAL_BRICKS.get(name), smelteryMeltingFolder));
+
+        MeltingRecipeBuilder.melting(Ingredient.of(MetalRegistry.NUGGETS.get(name).get()),
+                        FluidOutput.fromFluid(MetalRegistry.METAL_FLUIDS.get(name).get(), 10), stats.getTemperature(), (int) 32)
+                .save(pWriter, prefix(MetalRegistry.NUGGETS.get(name), smelteryMeltingFolder));
+
+        MaterialMeltingRecipeBuilder.material(MetallurgyTiCStats.MATERIALS.get(name),
+                        new FluidStack(MetalRegistry.METAL_FLUIDS.get(name).get(), 100))
+                .save(pWriter, prefix(MetallurgyTiCStats.MATERIALS.get(name), smelteryMeltingFolder));
+    }
+
+    public void buildAlloyRecipes(String name, MetalStats stats, Consumer<FinishedRecipe> pWriter) {
+        /*
+        AlloyRecipeBuilder.alloy(FluidOutput.fromTag(ModTags.Fluids.ETHERIC, 270), 2500)
+                .addInput(TinkerFluids.moltenSlimesteel.get(), FluidValues.INGOT)
+                .addInput(TicEXTags.Fluids.HEPATIZON, FluidValues.INGOT)
+                .addInput(TicEXTags.Fluids.GOLD, FluidValues.INGOT)
+                .addInput(TicEXRegistry.MOLTEN_RECONSTRUCTION_CORE.get(), 250)
+                .save(pWriter, prefix(TicEXTags.Fluids.ETHERIC.location(), alloysFolder)); */
     }
 
     // Custom FinishedRecipe implementation for our recipe type

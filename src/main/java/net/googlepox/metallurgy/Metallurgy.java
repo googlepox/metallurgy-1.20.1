@@ -53,9 +53,11 @@ public class Metallurgy {
         ModMetals.init();
 
         ModTags.Items.createTags();
+        ModTags.Fluids.createTags();
 
         MetalRegistry.BLOCKS.register(modEventBus);
         MetalRegistry.ITEMS.register(modEventBus);
+        MetalRegistry.FLUIDS.register(modEventBus);
 
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);

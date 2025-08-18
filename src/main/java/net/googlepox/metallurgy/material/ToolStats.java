@@ -22,11 +22,11 @@ public class ToolStats {
         this.maxUses = maxUses;
         this.efficiency = efficiency;
         this.damage = damage;
-        this.maxHealth = 0;
-        this.movementSpeed = 0;
-        this.attackDamage = 0;
-        this.attackSpeed = 0;
-        this.reachDistance = 0;
+        this.maxHealth = 1.0;
+        this.movementSpeed = 1.0;
+        this.attackDamage = 1.0;
+        this.attackSpeed = 1.0;
+        this.reachDistance = 1.0;
     }
 
     public void setAttributes(double maxHealth, double movementSpeed, double attackDamage, double attackSpeed, double reachDistance)

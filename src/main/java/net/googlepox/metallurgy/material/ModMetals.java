@@ -10,6 +10,8 @@ import java.util.Set;
 
 public class ModMetals {
 
+    public static Set<MetalStats> MOD_METALS;
+
     public static void init()
     {
         Set<MetalStats> defaultStats = JsonMaterialHelper.readConfig(JsonMaterialHelper.DEFAULT_CONFIG, null);
@@ -42,6 +44,8 @@ public class ModMetals {
         }
 
         playerStats.forEach(MetalRegistry::registerMetal);
+
+        MOD_METALS = playerStats;
     }
 
 }
