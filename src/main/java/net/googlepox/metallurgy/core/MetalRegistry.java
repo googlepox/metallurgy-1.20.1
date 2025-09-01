@@ -1,38 +1,23 @@
 package net.googlepox.metallurgy.core;
 
 import net.googlepox.metallurgy.Metallurgy;
-import net.googlepox.metallurgy.fluid.BaseFluidType;
 import net.googlepox.metallurgy.item.ModToolTiers;
 import net.googlepox.metallurgy.material.MetalStats;
-import net.googlepox.metallurgy.util.ModTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.joml.Vector3f;
 import slimeknights.mantle.registration.deferred.FluidDeferredRegister;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
-import slimeknights.mantle.registration.object.FluidObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,9 +28,10 @@ public class MetalRegistry {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Metallurgy.MODID);
     public static final FluidDeferredRegister FLUIDS = new FluidDeferredRegister(Metallurgy.MODID);
+    //public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, Metallurgy.MODID);
+    //public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, Metallurgy.MODID);
 
-    public static final ResourceLocation METAL_STILL_RL = ResourceLocation.fromNamespaceAndPath(Metallurgy.MODID, "blocks/molten_metal_still");
-    public static final ResourceLocation METAL_FLOWING_RL = ResourceLocation.fromNamespaceAndPath(Metallurgy.MODID, "blocks/molten_metal_flow");
+    public static final ResourceLocation METAL_RL = ResourceLocation.fromNamespaceAndPath(Metallurgy.MODID, "block/molten_metal_");
 
     public static final Map<String, RegistryObject<Block>> ORE_BLOCKS = new HashMap<>();
     public static final Map<String, RegistryObject<Item>> ORE_ITEMS = new HashMap<>();
@@ -64,8 +50,8 @@ public class MetalRegistry {
     public static final Map<String, RegistryObject<Item>> NUGGETS = new HashMap<>();
     public static final Map<String, RegistryObject<Item>> DUSTS = new HashMap<>();
 
-    public static final Map<String, RegistryObject<FluidType>> METAL_FLUID_TYPES = new HashMap<>();
     public static final Map<String, FlowingFluidObject<ForgeFlowingFluid>> METAL_FLUIDS = new HashMap<>();
+    //public static final Map<String, FlowingFluidObject<ForgeFlowingFluid>> METAL_FLUIDS = new HashMap<>();
 
     public static final Map<String, RegistryObject<Item>> TOOLS_PICKAXE = new HashMap<>();
     public static final Map<String, RegistryObject<Item>> TOOLS_SWORD = new HashMap<>();
@@ -182,6 +168,21 @@ public class MetalRegistry {
                 () -> new Item(new Item.Properties()));
 
         // Fluids
+        /*
+        FluidRegistryContainer metalFluid = new FluidRegistryContainer(
+                "molten_" + metalStats.getName() + "_fluid",
+                FluidType.Properties.create().canSwim(true).canDrown(true).canPushEntity(true),
+                () -> FluidRegistryContainer.createExtension(
+                        new FluidRegistryContainer.ClientExtensions(
+                                Metallurgy.MODID,
+                                "molten_" + metalStats.getName() + "_fluid"
+                        ).tint(metalStats.getColorHex())
+                                .fogColor(metalStats.getColorRGBValues()[0], metalStats.getColorRGBValues()[1], metalStats.getColorRGBValues()[2])
+                ),
+                BlockBehaviour.Properties.copy(Blocks.WATER),
+                new Item.Properties()
+                        .stacksTo(1)
+        ); */
 
         FlowingFluidObject<ForgeFlowingFluid> fluid =  FLUIDS.register("molten_" + metalStats.getName())
                 .type(FluidType.Properties.create()
@@ -189,7 +190,7 @@ public class MetalRegistry {
                         .temperature(metalStats.getTemperature())
                         .viscosity(4000)
                         .density(800))
-                .bucket().block(MapColor.METAL, 9).flowing();
+                .bucket().block(MapColor.COLOR_CYAN, 9).flowing();
 
         METAL_FLUIDS.put(metalStats.getName(), fluid);
 

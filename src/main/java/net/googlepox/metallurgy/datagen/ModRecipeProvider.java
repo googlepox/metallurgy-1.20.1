@@ -15,6 +15,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -41,6 +43,7 @@ import slimeknights.mantle.recipe.helper.FluidOutput;
 import slimeknights.mantle.recipe.helper.ItemOutput;
 import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.fluids.TinkerFluids;
 import slimeknights.tconstruct.library.data.recipe.IMaterialRecipeHelper;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.recipe.FluidValues;
@@ -48,7 +51,10 @@ import slimeknights.tconstruct.library.recipe.casting.ItemCastingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.casting.material.MaterialFluidRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.melting.MaterialMeltingRecipeBuilder;
 import slimeknights.tconstruct.library.recipe.melting.MeltingRecipeBuilder;
+import slimeknights.tconstruct.smeltery.data.SmelteryRecipeProvider;
+import slimeknights.tconstruct.tools.data.material.MaterialIds;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -257,9 +263,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     private void createTinkerRecipes(String name, MetalStats stats, Consumer<FinishedRecipe> pWriter) {
-
         metalMaterialRecipe(pWriter, MetallurgyTiCStats.MATERIALS.get(name), materialFolder, name, false);
-        buildMaterialRecipes(name, stats, pWriter);
+        materialMeltingCasting(pWriter, MetallurgyTiCStats.MATERIALS.get(name), MetalRegistry.METAL_FLUIDS.get(name), materialFolder);
+        //buildMaterialRecipes(name, stats, pWriter);
         buildSmelteryRecipes(name, stats, pWriter);
         buildAlloyRecipes(name, stats, pWriter);
     }
@@ -277,7 +283,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     public void buildSmelteryRecipes(String name, MetalStats stats, Consumer<FinishedRecipe> pWriter) {
 
-        ItemCastingRecipeBuilder.retexturedBasinRecipe(ItemOutput.fromItem(MetalRegistry.METAL_BLOCKS.get(name).get()))
+        ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromItem(MetalRegistry.METAL_BLOCKS.get(name).get()))
                 .setFluidAndTime(MetalRegistry.METAL_FLUIDS.get(name), 900)
                 .setCoolingTime(800)
                 .save(pWriter, prefix(MetalRegistry.METAL_BLOCKS.get(name), smelteryCastingFolder + "block_casts/"));
